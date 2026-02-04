@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PgAdvisoryLock", "PgAdvisoryLock.csproj", "{D8BD8971-2B6D-421A-8381-CAFC0E096E57}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PgAdvisoryLock", "PgAdvisoryLock\PgAdvisoryLock.csproj", "{D8BD8971-2B6D-421A-8381-CAFC0E096E57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
