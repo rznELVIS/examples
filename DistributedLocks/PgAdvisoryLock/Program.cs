@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PgAdvisoryLock.Data;
 
@@ -12,10 +10,11 @@ services
 
 var serviceProvider = services.BuildServiceProvider();
 
-// Использование
 using (var scope = serviceProvider.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<PgAdvisoryLockDbContext>();
+    
+    var users = db.Users.ToList();
 }
 
 Console.WriteLine("Hello, World!");
