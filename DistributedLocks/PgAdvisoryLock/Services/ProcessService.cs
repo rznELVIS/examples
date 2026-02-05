@@ -1,15 +1,15 @@
+using Lock.Data;
+using Lock.Data.Data;
 using Microsoft.EntityFrameworkCore;
-using PgAdvisoryLock.Data;
-using PgAdvisoryLock.Data.Dbo;
 
 namespace PgAdvisoryLock.Services;
 
 public class ProcessService
 {
-    private readonly PgAdvisoryLockDbContext _db;
+    private readonly LockDbContext _db;
 
     public ProcessService(
-        PgAdvisoryLockDbContext db)
+        LockDbContext db)
     {
         _db = db;
     }

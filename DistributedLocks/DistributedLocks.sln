@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PgAdvisoryLock", "PgAdvisoryLock\PgAdvisoryLock.csproj", "{D8BD8971-2B6D-421A-8381-CAFC0E096E57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lock.Data", "Lock.Data\Lock.Data.csproj", "{06CCFA7A-E876-4538-9987-7CFC6A0C3672}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{D8BD8971-2B6D-421A-8381-CAFC0E096E57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8BD8971-2B6D-421A-8381-CAFC0E096E57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8BD8971-2B6D-421A-8381-CAFC0E096E57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06CCFA7A-E876-4538-9987-7CFC6A0C3672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06CCFA7A-E876-4538-9987-7CFC6A0C3672}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06CCFA7A-E876-4538-9987-7CFC6A0C3672}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06CCFA7A-E876-4538-9987-7CFC6A0C3672}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

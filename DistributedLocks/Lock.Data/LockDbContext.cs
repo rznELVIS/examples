@@ -1,20 +1,20 @@
+using Lock.Data.Data;
 using Microsoft.EntityFrameworkCore;
-using PgAdvisoryLock.Data.Dbo;
 
-namespace PgAdvisoryLock.Data;
+namespace Lock.Data;
 
-public class PgAdvisoryLockDbContext : DbContext
+public class LockDbContext : DbContext
 {
     public DbSet<Counter> Users { get; set; }
     
     public DbSet<Log> Logs { get; set; }
     
-    public PgAdvisoryLockDbContext(DbContextOptions<PgAdvisoryLockDbContext> options)
+    public LockDbContext(DbContextOptions<LockDbContext> options)
         : base(options)
     {
     }
     
-    public PgAdvisoryLockDbContext()
+    public LockDbContext()
     {
     }
 
@@ -52,7 +52,7 @@ public class PgAdvisoryLockDbContext : DbContext
                 .Property(x => x.Message)
                 .HasColumnName("message")
                 .IsRequired(false);
-            
+
             entity
                 .Property(x => x.LoggedAt)
                 .HasColumnName("logged_at")

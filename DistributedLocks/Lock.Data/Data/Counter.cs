@@ -1,4 +1,4 @@
-namespace PgAdvisoryLock.Data.Dbo;
+namespace Lock.Data.Data;
 
 public class Counter
 {
