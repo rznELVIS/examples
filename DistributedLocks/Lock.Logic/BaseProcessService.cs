@@ -1,23 +1,26 @@
-using Lock.Data;
+﻿using Lock.Data;
 using Lock.Data.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace PgAdvisoryLock.Services;
+namespace Lock.Logic;
 
-public class ProcessService
+public abstract class BaseProcessService(LockDbContext db)
 {
-    private readonly LockDbContext _db;
+    private readonly LockDbContext _db = db;
 
-    public ProcessService(
-        LockDbContext db)
+    public async Task Clear()
     {
-        _db = db;
+        await _db.Logs.ExecuteDeleteAsync();
+        
+        var counter = _db.Counters.First();
+        
+        counter.Value = 0;
+        
+        await _db.SaveChangesAsync();
     }
     
-    public async Task DoAsync(Random random)
+    protected virtual async Task DoImplementationAsync()
     {
-        Thread.Sleep(random.Next(10));
-        
         var counter = await _db.Counters.FirstAsync();
 
         counter.Value++;

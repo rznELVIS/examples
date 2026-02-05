@@ -5,7 +5,7 @@ namespace Lock.Data;
 
 public class LockDbContext : DbContext
 {
-    public DbSet<Counter> Users { get; set; }
+    public DbSet<Counter> Counters { get; set; }
     
     public DbSet<Log> Logs { get; set; }
     
