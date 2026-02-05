@@ -1,20 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PgAdvisoryLock.Data;
+using PgAdvisoryLock.Services;
 
 var services = new ServiceCollection();
 
 services
     .AddDbContext<PgAdvisoryLockDbContext>(options =>
-        options.UseNpgsql("Host=localhost;Port=5432;Database=pg_advisory_lock_db;Username=user;Password=password"));
+        options .UseNpgsql("Host=localhost;Port=5432;Database=pg_advisory_lock_db;Username=user;Password=password"),
+        ServiceLifetime.Transient);
+services.AddTransient<ProcessService>();
+services.AddScoped<ManagerService>();
+services.AddScoped<ConcurrentManagerService>();
 
 var serviceProvider = services.BuildServiceProvider();
 
 using (var scope = serviceProvider.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<PgAdvisoryLockDbContext>();
-    
-    var users = db.Users.ToList();
+    var manager = scope.ServiceProvider.GetRequiredService<ConcurrentManagerService>();
+
+    await manager.Do(serviceProvider);
 }
 
-Console.WriteLine("Hello, World!");
+Console.WriteLine("Completed");

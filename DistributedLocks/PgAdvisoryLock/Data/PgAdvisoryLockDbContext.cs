@@ -5,7 +5,9 @@ namespace PgAdvisoryLock.Data;
 
 public class PgAdvisoryLockDbContext : DbContext
 {
-    public DbSet<User> Users { get; set; }
+    public DbSet<Counter> Users { get; set; }
+    
+    public DbSet<Log> Logs { get; set; }
     
     public PgAdvisoryLockDbContext(DbContextOptions<PgAdvisoryLockDbContext> options)
         : base(options)
@@ -20,9 +22,9 @@ public class PgAdvisoryLockDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>(entity =>
+        modelBuilder.Entity<Counter>(entity =>
         {
-            entity.ToTable("users");
+            entity.ToTable("counter");
             entity.HasKey(x => x.Id);
 
             entity
@@ -31,14 +33,30 @@ public class PgAdvisoryLockDbContext : DbContext
                 .IsRequired();
 
             entity
-                .Property(x => x.Name)
-                .HasColumnName("name")
+                .Property(x => x.Value)
+                .HasColumnName("value")
+                .IsRequired();
+        });
+
+        modelBuilder.Entity<Log>(entity =>
+        {
+            entity.ToTable("log");
+            entity.HasKey(x => x.Id);
+
+            entity
+                .Property(x => x.Id)
+                .HasColumnName("id")
                 .IsRequired();
 
             entity
-                .Property(x => x.Email)
-                .HasColumnName("email")
-                .IsRequired();
+                .Property(x => x.Message)
+                .HasColumnName("message")
+                .IsRequired(false);
+            
+            entity
+                .Property(x => x.LoggedAt)
+                .HasColumnName("logged_at")
+                .IsRequired(false);
         });
     }
 }
