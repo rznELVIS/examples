@@ -1,7 +1,8 @@
-﻿using Lock.Data;
+﻿using ConcurrenceAccess;
+using Lock.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SimpleAccess;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var services = new ServiceCollection();
 
@@ -17,11 +18,10 @@ services.AddScoped<ManageService>();
 services.AddScoped<ProcessService>();
 
 var serviceProvider = services.BuildServiceProvider();
-
 using (var scope = serviceProvider.CreateScope())
 {
     var manager = scope.ServiceProvider.GetRequiredService<ManageService>();
     await manager.Do();
 }
 
-Console.WriteLine("Simple example is completed.");
+Console.WriteLine("Concurrence example is completed.");

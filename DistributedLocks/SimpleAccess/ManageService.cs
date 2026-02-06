@@ -3,17 +3,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace SimpleAccess;
 
-public class ManageService : BaseManageService
+public class ManageService(ProcessService processService) : BaseManageService()
 {
-    public override async Task Do(IServiceScope scope)
+    public override async Task Do()
     {
-        var process = scope.ServiceProvider.GetRequiredService<ProcessService>();
-
-        await process.Clear();
+        await processService.Clear();
         
         for (int i = 0; i < 100; i++)
         {
-            await process.DoAsync();
+            await processService.DoAsync();
         }
     }
 }

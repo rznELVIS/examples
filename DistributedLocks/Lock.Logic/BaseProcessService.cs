@@ -4,24 +4,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lock.Logic;
 
-public abstract class BaseProcessService(LockDbContext db)
+public abstract class BaseProcessService(
+    LockDbContext db,
+    IDbContextFactory<LockDbContext> dbContextFactory)
 {
-    private readonly LockDbContext _db = db;
+    protected readonly LockDbContext Db = db;
+    protected readonly IDbContextFactory<LockDbContext> DbFactory = dbContextFactory;
 
     public async Task Clear()
     {
-        await _db.Logs.ExecuteDeleteAsync();
+        await Db.Logs.ExecuteDeleteAsync();
         
-        var counter = _db.Counters.First();
+        var counter = Db.Counters.First();
         
         counter.Value = 0;
         
-        await _db.SaveChangesAsync();
+        await Db.SaveChangesAsync();
     }
     
-    protected virtual async Task DoImplementationAsync()
+    protected virtual async Task DoImplementationAsync(LockDbContext context)
     {
-        var counter = await _db.Counters.FirstAsync();
+        var counter = await context.Counters.FirstAsync();
 
         counter.Value++;
 
@@ -31,8 +34,8 @@ public abstract class BaseProcessService(LockDbContext db)
             LoggedAt = DateTimeOffset.UtcNow
         };
         
-        _db.Logs.Add(log);
+        context.Logs.Add(log);
         
-        await _db.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 }
