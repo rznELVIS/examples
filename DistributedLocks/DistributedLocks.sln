@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcurrenceAccess", "Concur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsolationLevelAccess", "IsolationLevelAccess\IsolationLevelAccess.csproj", "{2C2440A0-6A8B-4271-890A-F52157573D41}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockAccess", "LockAccess\LockAccess.csproj", "{18D26178-5A7C-43C5-B12F-003D05A34A13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{2C2440A0-6A8B-4271-890A-F52157573D41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C2440A0-6A8B-4271-890A-F52157573D41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C2440A0-6A8B-4271-890A-F52157573D41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18D26178-5A7C-43C5-B12F-003D05A34A13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18D26178-5A7C-43C5-B12F-003D05A34A13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18D26178-5A7C-43C5-B12F-003D05A34A13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18D26178-5A7C-43C5-B12F-003D05A34A13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

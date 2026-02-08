@@ -1,17 +1,10 @@
-﻿using Lock.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Lock.Logic;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleAccess;
 
 var services = new ServiceCollection();
 
-services
-    .AddDbContext<LockDbContext>(options =>
-        options .UseNpgsql(Constants.ConnectionString));
-
-services
-    .AddDbContextFactory<LockDbContext>(options =>
-        options .UseNpgsql(Constants.ConnectionString));
+services.AddBaseDbContext();
 
 services.AddScoped<ManageService>();
 services.AddScoped<ProcessService>();

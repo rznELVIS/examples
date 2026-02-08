@@ -1,9 +1,6 @@
-﻿using ConcurrenceAccess;
-using Lock.Data;
-using Lock.Logic;
-using Microsoft.EntityFrameworkCore;
+﻿using Lock.Logic;
+using LockAccess;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var services = new ServiceCollection();
 
@@ -19,4 +16,5 @@ using (var scope = serviceProvider.CreateScope())
     await manager.Do();
 }
 
-Console.WriteLine("Concurrence example is completed.");
+
+Console.WriteLine("Lock example is completed.");
