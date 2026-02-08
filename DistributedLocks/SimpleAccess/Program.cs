@@ -14,7 +14,9 @@ var serviceProvider = services.BuildServiceProvider();
 using (var scope = serviceProvider.CreateScope())
 {
     var manager = scope.ServiceProvider.GetRequiredService<ManageService>();
-    await manager.Do();
+    var result = await manager.DoWithStatistics(LogicConstants.BaseCount);
+    
+    Console.WriteLine(result);
 }
 
 Console.WriteLine("Simple example is completed.");
