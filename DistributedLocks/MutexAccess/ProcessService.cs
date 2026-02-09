@@ -1,4 +1,5 @@
 using Lock.Data;
+using Lock.Data.Data;
 using Lock.Logic;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,45 @@ public class ProcessService(
         {
             await using var context = await dbContextFactory.CreateDbContextAsync();
             await DoImplementationAsync(context).ConfigureAwait(true);
+        }
+        finally
+        {
+            _mutexService.CurrentMutex.ReleaseMutex();
+        }
+    }
+
+    public void ClearSync()
+    {
+        Db.Logs.ExecuteDelete();
+        
+        var counter = Db.Counters.First();
+        
+        counter.Value = 0;
+
+        Db.SaveChanges();
+    }
+
+    public void Do()
+    {
+        using var context = dbContextFactory.CreateDbContext();
+
+        _mutexService.CurrentMutex.WaitOne(1000);
+
+        try
+        {
+            var counter = context.Counters.First();
+
+            counter.Value++;
+
+            var log = new Log
+            {
+                Message = $"Новое значение {counter.Value}",
+                LoggedAt = DateTimeOffset.UtcNow
+            };
+
+            context.Logs.Add(log);
+
+            context.SaveChanges();
         }
         finally
         {

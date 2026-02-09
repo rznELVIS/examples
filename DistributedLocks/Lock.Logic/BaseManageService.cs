@@ -5,7 +5,7 @@ namespace Lock.Logic;
 
 public abstract class BaseManageService(BaseProcessService service)
 {
-    private readonly Random _random = new();
+    protected readonly Random _random = new();
     
     public async Task<string> DoWithStatistics(int count)
     {

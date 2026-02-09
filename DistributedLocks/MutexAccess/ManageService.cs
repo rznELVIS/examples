@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Lock.Logic;
 
 namespace MutexAccess;
@@ -15,5 +16,39 @@ public class ManageService(ProcessService service) : BaseManageService(service)
         }
         
         await Task.WhenAll(tasks);
+    }
+
+    public string DoSync(int count)
+    {
+        service.ClearSync();
+        
+        var threads = new List<Thread>();
+
+        Stopwatch stopwatch = Stopwatch.StartNew();
+        
+        for (int i = 0; i < count; i++)
+        {
+            Thread thred = new Thread(() => 
+            {
+                service.Do();
+            });
+            
+            threads.Add(thred);
+        }
+
+        foreach (var thread in threads)
+        {
+            Thread.Sleep(_random.Next(50));
+            thread.Start();
+        }
+        
+        foreach (var thread in threads)
+        {
+            thread.Join();
+        }
+        
+        stopwatch.Stop();
+
+        return $"Общее время: {stopwatch.ElapsedMilliseconds} ms";
     }
 }

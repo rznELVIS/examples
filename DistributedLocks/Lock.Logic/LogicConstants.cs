@@ -2,5 +2,5 @@ namespace Lock.Logic;
 
 public class LogicConstants
 {
-    public const int BaseCount = 5;
+    public const int BaseCount = 100;
 }

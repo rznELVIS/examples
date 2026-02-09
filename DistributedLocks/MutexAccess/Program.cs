@@ -16,9 +16,9 @@ var serviceProvider = services.BuildServiceProvider();
 using (var scope = serviceProvider.CreateScope())
 {
     var manager = scope.ServiceProvider.GetRequiredService<ManageService>();
-    var result = await manager.DoWithStatistics(LogicConstants.BaseCount);
+    var result = manager.DoSync(LogicConstants.BaseCount);
     
     Console.WriteLine(result);
 }
 
-Console.WriteLine("Lock example is completed.");
+Console.WriteLine("Mutex example is completed.");
