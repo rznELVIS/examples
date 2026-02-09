@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsolationLevelAccess", "Iso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockAccess", "LockAccess\LockAccess.csproj", "{18D26178-5A7C-43C5-B12F-003D05A34A13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutexAccess", "MutexAccess\MutexAccess.csproj", "{E03A5DB7-F6F7-4A8D-9247-B786AA2161E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{18D26178-5A7C-43C5-B12F-003D05A34A13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18D26178-5A7C-43C5-B12F-003D05A34A13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18D26178-5A7C-43C5-B12F-003D05A34A13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E03A5DB7-F6F7-4A8D-9247-B786AA2161E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E03A5DB7-F6F7-4A8D-9247-B786AA2161E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E03A5DB7-F6F7-4A8D-9247-B786AA2161E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E03A5DB7-F6F7-4A8D-9247-B786AA2161E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,8 +1,8 @@
 using Lock.Logic;
 
-namespace IsolationLevelAccess;
+namespace MutexAccess;
 
-public class ManageService(ProcessService processService) : BaseManageService(processService)
+public class ManageService(ProcessService service) : BaseManageService(service)
 {
     public override async Task Do(int count)
     {

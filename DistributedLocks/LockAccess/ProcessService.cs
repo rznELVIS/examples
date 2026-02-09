@@ -8,7 +8,7 @@ public class ProcessService(LockDbContext db, IDbContextFactory<LockDbContext> d
 {
     private readonly SemaphoreSlim _semaphore = new(1, 1);
     
-    public async Task DoAsync()
+    public override async Task DoAsync()
     {
         await _semaphore.WaitAsync();
 
