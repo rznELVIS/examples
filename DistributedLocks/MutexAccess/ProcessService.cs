@@ -14,16 +14,17 @@ public class ProcessService(
     
     public override async Task DoAsync()
     {
-        await Task.Run(() =>  _mutexService.CurrentMutex.WaitOne(1000));
-        
-        try
+        if (_mutexService.CurrentMutex.WaitOne(1000))
         {
-            await using var context = await dbContextFactory.CreateDbContextAsync();
-            await DoImplementationAsync(context).ConfigureAwait(true);
-        }
-        finally
-        {
-            _mutexService.CurrentMutex.ReleaseMutex();
+            try
+            {
+                /*await using var context = await dbContextFactory.CreateDbContextAsync().ConfigureAwait(true);*/
+                await DoImplementationAsync(Db).ConfigureAwait(true);
+            }
+            finally
+            {
+                _mutexService.CurrentMutex.ReleaseMutex();
+            }
         }
     }
 
