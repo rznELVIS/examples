@@ -21,6 +21,28 @@ public class LockDbContext : DbContext
     {
     }
 
+    public async Task<string> Lock(string resource, string lockedBy)
+    {
+        var sql = @"
+            INSERT INTO lock (resource, locked_by, expires_at)
+            VALUES ({0}, {1}, NOW() + ({2} || ' seconds')::interval)
+            ON CONFLICT (resource) DO UPDATE
+            SET locked_by = {1},
+                expires_at = NOW() + ({2} || ' seconds')::interval
+            WHERE lock.expires_at < NOW()
+            RETURNING locked_by;";
+        
+        var result =  Database
+            .SqlQueryRaw<string>(sql, resource, lockedBy, 10);
+
+        foreach (var item in result)
+        {
+            return item;
+        }
+
+        return string.Empty;
+    }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
