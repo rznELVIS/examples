@@ -3,7 +3,7 @@ using Lock.Logic;
 
 namespace MutexAccess;
 
-public class ManageService(ProcessService service) : BaseManageService(service)
+public class ManageServiceThreads(ProcessService service) : BaseManageService(service)
 {
     public override async Task Do(int count)
     {
@@ -18,7 +18,7 @@ public class ManageService(ProcessService service) : BaseManageService(service)
         await Task.WhenAll(tasks);
     }
 
-    public string DoSync(int count)
+    public string DoThreads(int count)
     {
         service.ClearSync();
         

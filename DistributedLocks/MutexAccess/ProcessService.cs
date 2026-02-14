@@ -43,7 +43,7 @@ public class ProcessService(
     {
         using var context = dbContextFactory.CreateDbContext();
 
-        _mutexService.CurrentMutex.WaitOne(1000);
+        _mutexService.CurrentMutex.WaitOne(10);
 
         try
         {
