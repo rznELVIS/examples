@@ -9,6 +9,9 @@ public class LockDbContext : DbContext
     
     public DbSet<Log> Logs { get; set; }
     
+    
+    public DbSet<Locker> Locks { get; set; }
+    
     public LockDbContext(DbContextOptions<LockDbContext> options)
         : base(options)
     {
@@ -56,6 +59,27 @@ public class LockDbContext : DbContext
             entity
                 .Property(x => x.LoggedAt)
                 .HasColumnName("logged_at")
+                .IsRequired(false);
+        });
+
+        modelBuilder.Entity<Locker>(entity =>
+        {
+            entity.ToTable("lock");
+            entity.HasKey(x => x.Resource);
+
+            entity
+                .Property(x => x.Resource)
+                .HasColumnName("resource")
+                .IsRequired();
+
+            entity
+                .Property(x => x.LockedBy)
+                .HasColumnName("locked_by")
+                .IsRequired(false);
+            
+            entity
+                .Property(x => x.ExpiresAt)
+                .HasColumnName("expires_at")
                 .IsRequired(false);
         });
     }
