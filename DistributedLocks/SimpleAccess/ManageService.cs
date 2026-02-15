@@ -3,13 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace SimpleAccess;
 
-public class ManageService(ProcessService processService) : BaseManageService()
+public class ManageService(ProcessService processService) : BaseManageService(processService)
 {
-    public override async Task Do()
+    public override async Task Do(int count)
     {
-        await processService.Clear();
-        
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < count; i++)
         {
             await processService.DoAsync();
         }

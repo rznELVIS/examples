@@ -11,6 +11,8 @@ public abstract class BaseProcessService(
     protected readonly LockDbContext Db = db;
     protected readonly IDbContextFactory<LockDbContext> DbFactory = dbContextFactory;
 
+    public abstract Task DoAsync();
+    
     public async Task Clear()
     {
         await Db.Logs.ExecuteDeleteAsync();

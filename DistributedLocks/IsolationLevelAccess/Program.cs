@@ -1,6 +1,8 @@
-﻿using Lock.Logic;
+﻿using IsolationLevelAccess;
+using Lock.Data;
+using Lock.Logic;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SimpleAccess;
 
 var services = new ServiceCollection();
 
@@ -10,7 +12,6 @@ services.AddScoped<ManageService>();
 services.AddScoped<ProcessService>();
 
 var serviceProvider = services.BuildServiceProvider();
-
 using (var scope = serviceProvider.CreateScope())
 {
     var manager = scope.ServiceProvider.GetRequiredService<ManageService>();
@@ -19,4 +20,4 @@ using (var scope = serviceProvider.CreateScope())
     Console.WriteLine(result);
 }
 
-Console.WriteLine("Simple example is completed.");
+Console.WriteLine("Isolation level is completed.");

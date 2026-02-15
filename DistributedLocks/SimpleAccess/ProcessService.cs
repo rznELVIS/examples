@@ -8,7 +8,7 @@ public class ProcessService(
     LockDbContext db,
     IDbContextFactory<LockDbContext> dbContextFactory) : BaseProcessService(db, dbContextFactory)
 {
-    public async Task DoAsync()
+    public override async Task DoAsync()
     {
         await DoImplementationAsync(Db);
     }

@@ -1,12 +1,9 @@
 using Lock.Logic;
 
-namespace ConcurrenceAccess;
+namespace LockAccess;
 
 public class ManageService(ProcessService processService) : BaseManageService(processService)
 {
-    private readonly ProcessService _processService = processService;
-    private readonly Random _random = new();
-    
     public override async Task Do(int count)
     {
         var tasks = new List<Task>();
@@ -18,11 +15,5 @@ public class ManageService(ProcessService processService) : BaseManageService(pr
         }
         
         await Task.WhenAll(tasks);
-    }
-    
-    private Task GetTask()
-    {
-        Thread.Sleep(_random.Next(10));
-        return _processService.DoAsync();
     }
 }
