@@ -19,7 +19,7 @@ public class ProcessService(
         await using var context = await DbFactory.CreateDbContextAsync();
 
         string lockResult;
-        var count = 20;
+        var count = 50;
 
         do
         {
