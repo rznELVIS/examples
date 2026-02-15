@@ -15,7 +15,9 @@ var serviceProvider = services.BuildServiceProvider();
 using (var scope = serviceProvider.CreateScope())
 {
     var manager = scope.ServiceProvider.GetRequiredService<ManageService>();
-    await manager.Do(LogicConstants.BaseCount);
+    var result = await manager.DoWithStatistics(LogicConstants.BaseCount);
+    
+    Console.WriteLine(result);
 }
 
 Console.WriteLine("Isolation level is completed.");

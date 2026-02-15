@@ -9,31 +9,43 @@ public class ProcessService(
         IDbContextFactory<LockDbContext> dbContextFactory) 
     : BaseProcessService(db, dbContextFactory)
 {
+    private Random _random = new();
+    
     public override async Task DoAsync()
     {
         var lockResource = "counter";
         var lockName = Guid.NewGuid().ToString();
         
         await using var context = await DbFactory.CreateDbContextAsync();
-        
-        // получение блокировки
-        var lockResult = await context.CreateLock(resource:lockResource, lockedBy:lockName);
 
-        if (lockResult == lockName)
+        string lockResult;
+        var count = 20;
+
+        do
         {
-            Console.WriteLine($"Секция захвачена: {lockName}.");
+            // получение блокировки
+            lockResult = await context.CreateLock(resource: lockResource, lockedBy: lockName);
+
+            if (!string.IsNullOrEmpty(lockResult))
+            {
+                //Console.WriteLine($"Секция захвачена: {lockName}.");
+
+                await DoImplementationAsync(context);
+
+                // снятие блокировки
+                await context
+                    .Locks
+                    .Where(x => x.Resource == lockResource && x.LockedBy == lockName)
+                    .ExecuteDeleteAsync();
+            }
+            else
+            {
+                //Console.WriteLine($"Секция заблокирована для {lockName}.");
+                
+                Thread.Sleep(_random.Next(200));
+                count--;
+            }
             
-            await DoImplementationAsync(context);
-
-            // снятие блокировки
-            await context
-                .Locks
-                .Where(x => x.Resource == lockResource && x.LockedBy == lockName)
-                .ExecuteDeleteAsync();
-        }
-        else
-        {
-            Console.WriteLine($"Секция заблокирована для {lockName} заблокирована. Секция заблокированая {lockResult}.");
-        }
+        } while (string.IsNullOrEmpty(lockResult) && count > 0);
     }
 }
