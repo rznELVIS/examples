@@ -15,8 +15,16 @@ public class ManageService(ProcessService service)
         {
             Task task = Task.Run(GetTask);
             tasks.Add(task);
+
+            //await GetTask();
         }
         
         await Task.WhenAll(tasks);
+    }
+    
+    protected override Task GetTask()
+    {
+        Thread.Sleep(_random.Next(200));
+        return service.DoAsync();
     }
 }

@@ -21,7 +21,7 @@ public class LockDbContext : DbContext
     {
     }
 
-    public async Task<string> Lock(string resource, string lockedBy)
+    public Task<string> CreateLock(string resource, string lockedBy)
     {
         var sql = @"
             INSERT INTO lock (resource, locked_by, expires_at)
@@ -33,14 +33,15 @@ public class LockDbContext : DbContext
             RETURNING locked_by;";
         
         var result =  Database
-            .SqlQueryRaw<string>(sql, resource, lockedBy, 10);
+            .SqlQueryRaw<string>(sql, resource, lockedBy, 10)
+            .AsEnumerable();
 
         foreach (var item in result)
         {
-            return item;
+            return Task.FromResult(item);
         }
 
-        return string.Empty;
+        return Task.FromResult(string.Empty);
     }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)

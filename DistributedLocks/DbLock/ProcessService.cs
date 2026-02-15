@@ -16,11 +16,24 @@ public class ProcessService(
         
         await using var context = await DbFactory.CreateDbContextAsync();
         
-        var lockResult = await context.Lock(resource:lockResource, lockedBy:lockName);
+        // получение блокировки
+        var lockResult = await context.CreateLock(resource:lockResource, lockedBy:lockName);
 
         if (lockResult == lockName)
         {
+            Console.WriteLine($"Секция захвачена: {lockName}.");
+            
             await DoImplementationAsync(context);
+
+            // снятие блокировки
+            await context
+                .Locks
+                .Where(x => x.Resource == lockResource && x.LockedBy == lockName)
+                .ExecuteDeleteAsync();
+        }
+        else
+        {
+            Console.WriteLine($"Секция заблокирована для {lockName} заблокирована. Секция заблокированая {lockResult}.");
         }
     }
 }
