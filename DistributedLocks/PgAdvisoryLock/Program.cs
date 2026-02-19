@@ -6,11 +6,9 @@ using PgAdvisoryLock.Services;
 
 var services = new ServiceCollection();
 
-services
-    .AddDbContext<LockDbContext>(options =>
-        options .UseNpgsql(Constants.ConnectionString),
-        ServiceLifetime.Transient);
-services.AddTransient<ProcessService>();
+services.AddBaseDbContext();
+
+services.AddScoped<ProcessService>();
 services.AddScoped<ManageService>();
 
 var serviceProvider = services.BuildServiceProvider();
