@@ -1,4 +1,5 @@
 ﻿using Lock.Data;
+using Lock.Logic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PgAdvisoryLock.Services;
@@ -10,16 +11,16 @@ services
         options .UseNpgsql(Constants.ConnectionString),
         ServiceLifetime.Transient);
 services.AddTransient<ProcessService>();
-services.AddScoped<ManagerService>();
-services.AddScoped<ConcurrentManagerService>();
+services.AddScoped<ManageService>();
 
 var serviceProvider = services.BuildServiceProvider();
 
 using (var scope = serviceProvider.CreateScope())
 {
-    var manager = scope.ServiceProvider.GetRequiredService<ConcurrentManagerService>();
-
-    await manager.Do(serviceProvider);
+    var manager = scope.ServiceProvider.GetRequiredService<ManageService>();
+    var result = await manager.DoWithStatistics(LogicConstants.BaseCount);
+    
+    Console.WriteLine(result);
 }
 
 Console.WriteLine("Completed");

@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Lock.Data\Lock.Data.csproj" />
+      <ProjectReference Include="..\Lock.Logic\Lock.Logic.csproj" />
     </ItemGroup>
 
 </Project>
