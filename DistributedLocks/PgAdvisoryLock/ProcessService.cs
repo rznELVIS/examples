@@ -12,27 +12,23 @@ public class ProcessService(LockDbContext db,
 {
     private class LockResult
     {
-        public bool Acquired { get; set; }
+        public bool acquired { get; set; }
     }
     
     public override async Task DoAsync()
     {
         var resource = 123;
-        
+
         await using var context = await dbContextFactory.CreateDbContextAsync();
         
-        await context.Database.OpenConnectionAsync();
-        var connection = context.Database.GetDbConnection();
-
-        await using var command = connection.CreateCommand();
-        command.CommandText = "SELECT pg_try_advisory_lock(@key)";
-        command.Parameters.Add(new NpgsqlParameter("key", resource));
-
-        var result = (bool?)await command.ExecuteScalarAsync();
+        await using var transaction = await context.Database.BeginTransactionAsync();
         
-        Console.WriteLine(result);
+        var result = await context
+            .Database
+            .SqlQuery<LockResult>($"SELECT pg_try_advisory_xact_lock({resource}) as acquired")
+            .SingleAsync();
 
-        if (result.HasValue && result.Value)
+        if (result.acquired)
         {
             try
             {
@@ -40,14 +36,7 @@ public class ProcessService(LockDbContext db,
             }
             finally
             {
-                /*await using var command1 = connection.CreateCommand();
-                
-                command1.CommandText = "SELECT pg_advisory_unlock(@key)";
-                command1.Parameters.Add(new NpgsqlParameter("key", resource));
-                
-                await command1.ExecuteScalarAsync();*/
-                /*await context.Database
-                    .ExecuteSqlRawAsync("SELECT pg_advisory_unlock({0}) as value", resource);*/
+                await transaction.CommitAsync();
             }
         }
     }

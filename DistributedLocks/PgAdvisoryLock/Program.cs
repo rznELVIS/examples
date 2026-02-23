@@ -21,4 +21,4 @@ using (var scope = serviceProvider.CreateScope())
     Console.WriteLine(result);
 }
 
-Console.WriteLine("Completed");
+Console.WriteLine("Advisory lock is completed");
