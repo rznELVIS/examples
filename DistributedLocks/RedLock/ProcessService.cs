@@ -11,8 +11,11 @@ public class ProcessService(LockDbContext db,
 {
     public override async Task DoAsync()
     {
-        await using var context = await dbContextFactory.CreateDbContextAsync();
-        
-        await DoImplementationAsync(context);
+        await using var redLock = await redisService.CreateLockAsync();
+        if (redLock.IsAcquired)
+        {
+            await using var context = await dbContextFactory.CreateDbContextAsync();
+            await DoImplementationAsync(context);
+        }
     }
 }
