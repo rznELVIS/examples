@@ -1,7 +1,6 @@
 using Lock.Logic;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace PgAdvisoryLock;
+namespace RedLock;
 
 public class ManageService(ProcessService service) : BaseManageService(service)
 {

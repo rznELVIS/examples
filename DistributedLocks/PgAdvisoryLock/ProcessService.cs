@@ -4,7 +4,7 @@ using Lock.Logic;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
-namespace PgAdvisoryLock.Services;
+namespace PgAdvisoryLock;
 
 public class ProcessService(LockDbContext db,
     IDbContextFactory<LockDbContext> dbContextFactory) 

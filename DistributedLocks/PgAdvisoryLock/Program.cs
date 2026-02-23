@@ -2,7 +2,7 @@
 using Lock.Logic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PgAdvisoryLock.Services;
+using PgAdvisoryLock;
 
 var services = new ServiceCollection();
 
