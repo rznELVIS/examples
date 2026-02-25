@@ -11,11 +11,24 @@ public class ProcessService(LockDbContext db,
 {
     public override async Task DoAsync()
     {
-        await using var redLock = await redisService.CreateLockAsync();
-        if (redLock.IsAcquired)
+        await using (var redLock = await redisService.CreateLockAsync())
         {
-            await using var context = await dbContextFactory.CreateDbContextAsync();
-            await DoImplementationAsync(context);
+            if (redLock.IsAcquired)
+            {
+                var lockValue = await redisService.GetLockValueAsync();
+                Console.WriteLine($"lockValue: {lockValue}");
+
+                await using var context = await dbContextFactory.CreateDbContextAsync();
+                await DoImplementationAsync(context);
+
+                //await redisService.SetLockValueAsync(Guid.NewGuid().ToString());
+
+                //lockValue = await redisService.GetLockValueAsync();
+                //Console.WriteLine($"changed lockValue: {lockValue}");
+            }
         }
+        
+        var lockValueAfterLock = await redisService.GetLockValueAsync();
+        Console.WriteLine($"lockValueAfterLock: {lockValueAfterLock}");
     }
 }
