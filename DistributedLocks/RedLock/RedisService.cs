@@ -43,7 +43,9 @@ public class RedisService
     {
         var multiplexer = ConnectionMultiplexer.Connect("localhost:6379");
         _redis = multiplexer.GetDatabase();
-        
-        _factory = RedLockFactory.Create(new List<RedLockMultiplexer> { multiplexer });
+
+        var redLockMultiplexer = new RedLockMultiplexer(multiplexer);
+        redLockMultiplexer.RedisKeyFormat = "custom-redlock:{0}";
+        _factory = RedLockFactory.Create(new List<RedLockMultiplexer> { redLockMultiplexer });
     }
 }
