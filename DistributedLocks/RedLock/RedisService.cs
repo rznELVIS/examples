@@ -20,7 +20,10 @@ public class RedisService
         var resource = "lock-resource";
         var expiry = TimeSpan.FromSeconds(30);
         
-        return _factory.CreateLockAsync(resource, expiry);
+        var waitTime = TimeSpan.FromSeconds(2);
+        var retryTime = TimeSpan.FromMicroseconds(500);
+        
+        return _factory.CreateLockAsync(resource, expiry,  waitTime, retryTime);
     }
 
     public async Task<string> GetLockValueAsync()
@@ -45,7 +48,7 @@ public class RedisService
         _redis = multiplexer.GetDatabase();
 
         var redLockMultiplexer = new RedLockMultiplexer(multiplexer);
-        redLockMultiplexer.RedisKeyFormat = "custom-redlock:{0}";
+        //redLockMultiplexer.RedisKeyFormat = "custom-redlock:{0}";
         _factory = RedLockFactory.Create(new List<RedLockMultiplexer> { redLockMultiplexer });
     }
 }

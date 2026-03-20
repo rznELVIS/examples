@@ -26,9 +26,13 @@ public class ProcessService(LockDbContext db,
                 //lockValue = await redisService.GetLockValueAsync();
                 //Console.WriteLine($"changed lockValue: {lockValue}");
             }
+            else
+            {
+                Console.WriteLine("Lock already acquired");
+            }
         }
         
-        var lockValueAfterLock = await redisService.GetLockValueAsync();
-        Console.WriteLine($"lockValueAfterLock: {lockValueAfterLock}");
+        /*var lockValueAfterLock = await redisService.GetLockValueAsync();
+        Console.WriteLine($"lockValueAfterLock: {lockValueAfterLock}");*/
     }
 }
