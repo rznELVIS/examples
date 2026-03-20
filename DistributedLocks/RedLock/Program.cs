@@ -1,15 +1,14 @@
-﻿using Lock.Data;
-using Lock.Logic;
-using Microsoft.EntityFrameworkCore;
+﻿using Lock.Logic;
 using Microsoft.Extensions.DependencyInjection;
-using PgAdvisoryLock;
+using RedLock;
 
 var services = new ServiceCollection();
 
 services.AddBaseDbContext();
 
-services.AddScoped<ProcessService>();
+services.AddScoped<RedisService>();
 services.AddScoped<ManageService>();
+services.AddScoped<ProcessService>();
 
 var serviceProvider = services.BuildServiceProvider();
 
@@ -21,4 +20,4 @@ using (var scope = serviceProvider.CreateScope())
     Console.WriteLine(result);
 }
 
-Console.WriteLine("Advisory lock is completed");
+Console.WriteLine("RedLock example is completed.");

@@ -8,6 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="RedLock.net" Version="2.3.2" />
+      <PackageReference Include="StackExchange.Redis" Version="2.11.3" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\Lock.Data\Lock.Data.csproj" />
       <ProjectReference Include="..\Lock.Logic\Lock.Logic.csproj" />
     </ItemGroup>

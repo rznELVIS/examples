@@ -1,0 +1,54 @@
+using RedLockNet;
+using RedLockNet.SERedis;
+using RedLockNet.SERedis.Configuration;
+using StackExchange.Redis;
+
+namespace RedLock;
+
+public class RedisService
+{
+    private IDatabase _redis;
+    private RedLockFactory _factory;
+    
+    public RedisService()
+    {
+        InitRedis();
+    }
+
+    public Task<IRedLock> CreateLockAsync()
+    {
+        var resource = "lock-resource";
+        var expiry = TimeSpan.FromSeconds(30);
+        
+        var waitTime = TimeSpan.FromSeconds(2);
+        var retryTime = TimeSpan.FromMicroseconds(500);
+        
+        return _factory.CreateLockAsync(resource, expiry,  waitTime, retryTime);
+    }
+
+    public async Task<string> GetLockValueAsync()
+    {
+        var key = "redlock:lock-resource";
+        
+        var value = await _redis.StringGetAsync(key);
+        
+        return value.ToString();
+    }
+    
+    public async Task SetLockValueAsync(string value)
+    {
+        var key = "redlock:lock-resource";
+        
+        await _redis.StringSetAsync(key, value);
+    }
+    
+    private void InitRedis()
+    {
+        var multiplexer = ConnectionMultiplexer.Connect("localhost:6379");
+        _redis = multiplexer.GetDatabase();
+
+        var redLockMultiplexer = new RedLockMultiplexer(multiplexer);
+        //redLockMultiplexer.RedisKeyFormat = "custom-redlock:{0}";
+        _factory = RedLockFactory.Create(new List<RedLockMultiplexer> { redLockMultiplexer });
+    }
+}
