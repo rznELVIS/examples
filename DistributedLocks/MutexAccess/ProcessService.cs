@@ -18,7 +18,6 @@ public class ProcessService(
         {
             try
             {
-                /*await using var context = await dbContextFactory.CreateDbContextAsync().ConfigureAwait(true);*/
                 await DoImplementationAsync(Db).ConfigureAwait(true);
             }
             finally
