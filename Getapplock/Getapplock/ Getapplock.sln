@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Getapplock.Console", " Getapplock.Console\Getapplock.Console.csproj", "{6CF8427A-9033-4D57-9F24-F887406D9BE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Getapplock.Data", "Getapplock.Data\Getapplock.Data.csproj", "{696AF963-7CD6-46F0-9EF8-13FC18B7D45B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{6CF8427A-9033-4D57-9F24-F887406D9BE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CF8427A-9033-4D57-9F24-F887406D9BE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CF8427A-9033-4D57-9F24-F887406D9BE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{696AF963-7CD6-46F0-9EF8-13FC18B7D45B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{696AF963-7CD6-46F0-9EF8-13FC18B7D45B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{696AF963-7CD6-46F0-9EF8-13FC18B7D45B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{696AF963-7CD6-46F0-9EF8-13FC18B7D45B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
