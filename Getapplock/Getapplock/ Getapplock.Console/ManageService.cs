@@ -1,18 +1,40 @@
 using Getapplock.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Getapplock.Console;
 
 public class ManageService
 {
-    private readonly GetApplockDbContext _context;
+    private readonly IDbContextFactory<GetApplockDbContext> _contextFactory;
 
-    public ManageService(GetApplockDbContext context)
+    public ManageService(IDbContextFactory<GetApplockDbContext> contextFactory)
     {
-        _context = context;
+        _contextFactory = contextFactory;
     }
 
-    public void Do()
+    public async Task DoAsync(CancellationToken cancellationToken = default)
     {
-        var counters = _context.Counters.ToList();
+        var tasks = new List<Task>();
+        
+        for (int i = 0; i < 50; i++)
+        {
+            var task = UpdateCounterAsync(i, cancellationToken);
+            tasks.Add(task);
+        }
+        
+        await Task.WhenAll(tasks);
+        
+   }
+
+    private async Task UpdateCounterAsync(int iteration, CancellationToken cancellationToken = default)
+    {
+        System.Console.WriteLine($"UpdateCounterAsync выполняется для итерации: {iteration}");
+        
+        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        var counters = await context.Counters.ToListAsync(cancellationToken);
+        
+        System.Console.WriteLine($"Итерация {iteration}: получено {counters.Count} записей");
+        // Здесь можно добавить логику обработки counters
     }
 }

@@ -13,7 +13,7 @@ var serviceProvider = services.BuildServiceProvider();
 using (var scope = serviceProvider.CreateScope())
 {
     var manager = scope.ServiceProvider.GetRequiredService<ManageService>();
-    manager.Do();
+    await manager.DoAsync();
 }
 
 Console.WriteLine("Hello, World!");
