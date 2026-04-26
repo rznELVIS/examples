@@ -11,4 +11,5 @@ public static class DbContextExtension
             .AddDbContextFactory<GetApplockDbContext>(options =>
                 options.UseSqlServer(Constants.ConnectionString));
     }
+
 }
