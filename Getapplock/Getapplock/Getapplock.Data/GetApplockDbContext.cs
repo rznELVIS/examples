@@ -5,6 +5,7 @@ namespace Getapplock.Data;
 
 public class GetApplockDbContext : DbContext
 {
+    
     public DbSet<Counter> Counters { get; set; }
     
     public DbSet<Log> Logs { get; set; }
